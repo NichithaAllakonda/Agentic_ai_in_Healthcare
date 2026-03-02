@@ -1,13 +1,18 @@
-def admin_decision(risk):
+import json
+import os
 
-    if risk == "High":
-        return ("🚨 Immediate ICU admission required.\n"
-                "Hospital admin must alert emergency doctors and prepare ICU support.")
+class AdminAgent:
 
-    elif risk == "Moderate":
-        return ("⚠ Patient requires close monitoring.\n"
-                "Admin should inform duty doctor and keep emergency support ready.")
+    def __init__(self):
+        # Load protocol model (knowledge base)
+        with open("models/admin_protocol_model.json") as f:
+            self.protocol_model = json.load(f)
 
-    else:
-        return ("✅ Patient stable.\n"
-                "Routine monitoring and regular checkups suggested.")
+    def get_guideline(self, risk_level):
+
+        guideline = self.protocol_model.get(risk_level)
+
+        if not guideline:
+            guideline = self.protocol_model["LOW"]
+
+        return guideline

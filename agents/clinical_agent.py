@@ -1,23 +1,33 @@
 import joblib
 import numpy as np
 
-model = joblib.load("models/xgb_model.pkl")
+class ClinicalAgent:
 
-def predict_risk(hr, spo2, temp, bp, rr, age, glucose, wbc, creatinine):
+    def __init__(self):
+        self.model = joblib.load("models/xgb_model.pkl")
+        self.scaler = joblib.load("models/scaler.pkl")
+        self.feature_order = joblib.load("models/feature_order.pkl")
 
-    data = np.array([[age, 1, hr, bp, spo2, temp, rr, glucose, wbc, creatinine, 3]])
+    def predict(self, patient_dict):
 
-    prob = model.predict_proba(data)[0][1]
+        data = np.array([[patient_dict.get(f, 0) for f in self.feature_order]])
+        data_scaled = self.scaler.transform(data)
 
-    # ---- RISK CONDITIONS ----
-    if prob > 0.70:
-        risk = "High"
-        desc = "Patient vitals are critically abnormal indicating high mortality risk."
-    elif prob > 0.40:
-        risk = "Moderate"
-        desc = "Patient vitals show moderate abnormalities. Needs observation."
-    else:
-        risk = "Low"
-        desc = "Patient vitals are mostly normal. Patient stable."
+        prob = float(self.model.predict_proba(data_scaled)[0][1])
+        confidence = round(max(prob, 1 - prob), 3)
 
-    return risk, prob, desc
+        severity_score = int(prob * 100)
+
+        if prob > 0.75:
+            risk = "HIGH"
+        elif prob > 0.40:
+            risk = "MEDIUM"
+        else:
+            risk = "LOW"
+
+        return {
+            "probability": round(prob, 3),
+            "confidence": confidence,
+            "severity_score": severity_score,
+            "risk_level": risk
+        }

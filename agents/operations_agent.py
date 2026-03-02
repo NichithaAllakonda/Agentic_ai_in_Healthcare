@@ -1,13 +1,17 @@
-def allocate_resources(risk):
+import json
 
-    if risk == "High":
-        return ("🏥 ICU bed allocated.\n"
-                "Critical care team alerted and ventilator support prepared.")
+class OperationsAgent:
 
-    elif risk == "Moderate":
-        return ("🛏 Observation ward allocated.\n"
-                "Nurse monitoring and doctor review scheduled.")
+    def __init__(self):
+        # Load resource allocation policy model
+        with open("models/operations_policy_model.json") as f:
+            self.policy_model = json.load(f)
 
-    else:
-        return ("🟢 General ward sufficient.\n"
-                "Basic monitoring devices allocated.")
+    def allocate(self, risk_level):
+
+        resource_plan = self.policy_model.get(risk_level)
+
+        if not resource_plan:
+            resource_plan = self.policy_model["LOW"]
+
+        return resource_plan

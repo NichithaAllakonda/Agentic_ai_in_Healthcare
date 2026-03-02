@@ -53,8 +53,11 @@ Final Risk Intelligence Dashboard
 
 ** The architecture ensures: **
 Modular separation of responsibilities
+
 Scalable agent coordination
+
 End-to-end explainability
+
 Real-time decision support 
 
 🧠 Agents Description
@@ -138,13 +141,16 @@ MIMIC-III ICU dataset
 Structured vitals, labs, demographics
 Mortality as target variable 
 
-📌 Future Enhancements
+📌 Future Enhancements:
 
-External ho<img width="1920" height="1080" alt="Screenshot (290)" src="https://github.com/user-attachments/assets/91b61efe-019e-48c2-9623-d6e8eaba01c7" />
 spital dataset validation
+
 SHAP-based model explainability
+
 Real-time EHR integration
+
 Cloud deployment
+
 Wearable sensor data integration
 
 Outputs:
@@ -155,6 +161,7 @@ Outputs:
 <img width="1920" height="1080" alt="Screenshot (289)" src="https://github.com/user-attachments/assets/939c6315-04ba-47d8-a1d9-cee0237803a5" /> 
 
 <img width="1920" height="1080" alt="Screenshot (288)" src="https://github.com/user-attachments/assets/76091837-0828-4295-8eed-b5374e301645" /> 
+
 
 
 

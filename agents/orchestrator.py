@@ -10,7 +10,7 @@ class Orchestrator:
         self.operations = OperationsAgent()
 
     def run(self, patient_data):
-
+        
         # 1️⃣ Clinical Agent
         clinical_output = self.clinical.predict(patient_data)
         risk_level = clinical_output["risk_level"]
